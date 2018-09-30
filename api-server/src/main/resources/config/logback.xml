@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+
+    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
+    <property name="logPath" value="./out/log" />
+
+    <!-- 日志最大的历史 30天 -->
+    <property name="maxHistory" value="30"/>
+
+    <!-- 日志最大的历史 30天 -->
+    <property name="maxFileSize" value="10MB"/>
+
+    <!-- 控制台日志配置 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- 格式化 d-日期 p-日志级别（5个level） t-线程 c-类 m-日志消息 n-换行 i-整数标记 -->
+            <pattern>[%p][%t][%c][%d{yyyy-MM-dd HH:mm:ss}] %m%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- info级别日志控制 -->
+    <appender name="FILE_INFO"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 文件路径 -->
+        <file>${logPath}/info.log</file>
+        <!-- 是否追加 默认为true -->
+        <append>true</append>
+        <!-- 滚动策略 日期+大小 策略 -->
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/info-%d{yyyy-MM-dd}-%i.zip</fileNamePattern>
+            <maxFileSize>${maxFileSize}</maxFileSize>
+            <!-- 日志保存周期 -->
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <!-- 格式化 -->
+        <encoder>
+            <pattern>[%p][%t][%c][%d{yyyy-MM-dd HH:mm:ss}] %m%n</pattern>
+        </encoder>
+        <!-- 级别过滤 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- warn级别日志控制 -->
+    <appender name="WARN_INFO"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 文件路径 -->
+        <file>${logPath}/warn.log</file>
+        <!-- 是否追加 默认为true -->
+        <append>true</append>
+        <!-- 滚动策略 日期+大小 策略 -->
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/warn-%d{yyyy-MM-dd}-%i.zip</fileNamePattern>
+            <!-- 日志保存周期 -->
+            <maxHistory>${maxHistory}</maxHistory>
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </rollingPolicy>
+        <!-- 格式化 -->
+        <encoder>
+            <pattern>[%p][%t][%c][%d{yyyy-MM-dd HH:mm:ss}] %m%n</pattern>
+        </encoder>
+        <!-- 级别过滤 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- error级别日志控制 -->
+    <appender name="ERROR_INFO"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 文件路径 -->
+        <file>${logPath}/error.log</file>
+        <!-- 是否追加 默认为true -->
+        <append>true</append>
+        <!-- 滚动策略 日期+大小 策略 -->
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${logPath}/error-%d{yyyy-MM-dd}-%i.zip</FileNamePattern>
+            <!-- 日志保存周期 -->
+            <maxHistory>${maxHistory}</maxHistory>
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </rollingPolicy>
+        <!-- 格式化 -->
+        <encoder>
+            <pattern>[%p][%t][%c][%d{yyyy-MM-dd HH:mm:ss}] %m%n</pattern>
+        </encoder>
+        <!-- 级别过滤 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- debug级别日志控制 -->
+    <appender name="DEBUG_INFO"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 文件路径 -->
+        <file>${logPath}/debug.log</file>
+        <!-- 是否追加 默认为true -->
+        <append>true</append>
+        <!-- 滚动策略 日期+大小 策略 -->
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${logPath}/debug-%d{yyyy-MM-dd}-%i.zip</FileNamePattern>
+            <!-- 日志保存周期 -->
+            <maxHistory>${maxHistory}</maxHistory>
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </rollingPolicy>
+        <!-- 格式化 -->
+        <encoder>
+            <pattern>[%p][%t][%c][%d{yyyy-MM-dd HH:mm:ss}] %m%n</pattern>
+        </encoder>
+        <!-- 级别过滤 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 日志级别 TRACE, DEBUG, INFO, WARN, ERROR, ALL和OFF  默认debug-->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE_INFO" />
+        <appender-ref ref="WARN_INFO" />
+        <appender-ref ref="ERROR_INFO" />
+        <appender-ref ref="DEBUG_INFO" />
+    </root>
+</configuration>
